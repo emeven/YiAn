@@ -241,8 +241,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_enter"/>
     </LinearLayout>
@@ -270,8 +270,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_enter"/>
     </LinearLayout>
