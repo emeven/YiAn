@@ -275,5 +275,23 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_enter"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/test_receive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/fragment_home_position_txt_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hellow world"/>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/fragment_home_bmapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+
+
 
 </LinearLayout>
