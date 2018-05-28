@@ -86,22 +86,6 @@ public class LocationActivity extends AppCompatActivity {
                 navigateTo(location.getLatitude(), location.getLongitude());
             }
         }
-        Button start = (Button) findViewById(R.id.start_button);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LocationActivity.this, "开始画线", Toast.LENGTH_SHORT).show();
-                handler.post(runnable);
-            }
-        });
-        Button stop = (Button) findViewById(R.id.stop_button);
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LocationActivity.this, "停止画线", Toast.LENGTH_SHORT).show();
-                handler.removeCallbacks(runnable);
-            }
-        });
     }
 
     private Handler handler=new Handler();

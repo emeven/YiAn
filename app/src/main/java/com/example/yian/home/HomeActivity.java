@@ -25,18 +25,29 @@ import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity {
 
+    //mqtt信息存放
+    private String heartRate;//存放心率
+    private String spO2; //存放血氧
+    private String longitude,latitude;//存放经纬度
 
-    //private String host = "tcp://192.168.0.3:61613";//"tcp://0.0.0.0:61613"
+    //服务器登录信息
     private String host = "tcp://101.132.173.189:1883";
     private String userName = "admin";
     private String passWord = "IOT423!!!";
+
     private Handler handler;
     private MqttClient client;
-    private String myTopic1 ="HeartRate";
+
+    //主题名称
+    private String  heartRateTopic="HeartRate";
+    private String SpO2Topic="SpO2";
+    private String longitudeTopic="Longitude";
+    private String latitudeTopic="Latitude";
+
     private MqttConnectOptions options;
     private ScheduledExecutorService scheduler;
     private int tag=1;
-    private String getTopicName="HeartRate";
+    private String getTopicName="Topic";
     private BottomBar bottomBar;
     private String a="1";
 
@@ -55,6 +66,19 @@ public class HomeActivity extends AppCompatActivity {
                 //显示出获取到的内容
 
                 if(getTopicName.equals("HeartRate")){
+                    heartRate=(String) msg.obj;
+                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                }
+                if(getTopicName.equals("SpO2")){
+                    spO2=(String)msg.obj;
+                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                }
+                if(getTopicName.equals("Longitude")){
+                    longitude=(String)msg.obj;
+                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                }
+                if(getTopicName.equals("Latitude")){
+                    latitude=(String)msg.obj;
                     Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
                 }
 
@@ -68,8 +92,10 @@ public class HomeActivity extends AppCompatActivity {
                     //showIsConnected.setText("与服务器连接成功！");
                     try {
                         //开始订阅
-                        client.subscribe(myTopic1, 1);
-
+                        client.subscribe(heartRateTopic, 1);
+                        client.subscribe(SpO2Topic, 1);
+                        client.subscribe(longitudeTopic, 1);
+                        client.subscribe(latitudeTopic, 1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -199,10 +225,14 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
-    public String getData(){
-        return a;
+    //与碎片进行通信，提供心率,血氧，经纬度等数据
+    public String[] getData(){
+        //String[] mqttData = {heartRate, spO2, longitude, latitude};
+        String[] mqttData = {"1","2","3","4"};
+        return mqttData;
     }
+
+
     void initBottomBar(){
         bottomBar.setContainer(R.id.fl_container)
                 .setTitleBeforeAndAfterColor("#999999", "#6e8bc0")

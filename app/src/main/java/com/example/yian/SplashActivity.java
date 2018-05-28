@@ -28,7 +28,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private void gotoHome() {
         publish.open(SplashActivity.this);
-        Toast.makeText(SplashActivity.this,"open servicr success!",Toast.LENGTH_SHORT).show();
         startActivity(new Intent(SplashActivity.this, HomeActivity.class));
         finish();
     }
