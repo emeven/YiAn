@@ -22,20 +22,10 @@ import com.example.yian.test.TestActivity;
  */
 public class HousewiferyFragment extends Fragment {
 
-    private Button testButton;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_housewifery, container, false);
-        testButton=(Button)view.findViewById(R.id.testbutton);
-
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(), LocationActivity.class);
-                startActivity(intent);
-            }
-        });
         return view;
     }
 

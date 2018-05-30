@@ -47,7 +47,7 @@ public class Publish {
     public void open(Context context) {
         if (client != null) {
             connect();
-            Toast.makeText(context, "服务器打开", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "服务器打开", Toast.LENGTH_SHORT).show();
         }
     }
 

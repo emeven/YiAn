@@ -1,16 +1,21 @@
 package com.example.yian.home;
 
+import android.app.Service;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.yian.Apollo.Publish;
 import com.example.yian.R;
 import com.example.yian.view.BottomBar;
 
+import org.achartengine.ChartFactory;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -29,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     private String heartRate;//存放心率
     private String spO2; //存放血氧
     private String longitude,latitude;//存放经纬度
+    private String fallDown;
 
     //服务器登录信息
     private String host = "tcp://101.132.173.189:1883";
@@ -43,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private String SpO2Topic="SpO2";
     private String longitudeTopic="Longitude";
     private String latitudeTopic="Latitude";
+    private String FallDownTopic="Help Signal";
 
     private MqttConnectOptions options;
     private ScheduledExecutorService scheduler;
@@ -50,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
     private String getTopicName="Topic";
     private BottomBar bottomBar;
     private String a="1";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +73,11 @@ public class HomeActivity extends AppCompatActivity {
 
                 if(getTopicName.equals("HeartRate")){
                     heartRate=(String) msg.obj;
-                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
                 }
                 if(getTopicName.equals("SpO2")){
                     spO2=(String)msg.obj;
-                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
                 }
                 if(getTopicName.equals("Longitude")){
                     longitude=(String)msg.obj;
@@ -80,6 +86,13 @@ public class HomeActivity extends AppCompatActivity {
                 if(getTopicName.equals("Latitude")){
                     latitude=(String)msg.obj;
                     Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                }
+                if(getTopicName.equals("Help Signal")){
+                    fallDown=(String) msg.obj;
+                    Toast.makeText(HomeActivity.this,"warning!",Toast.LENGTH_SHORT).show();
+                    //振动事件，等待一秒，振动一秒，重复三次
+                    Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
+                    vibrator.vibrate(new long[]{1000,1000,1000,1000,1000,1000},-1);
                 }
 
 
@@ -96,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                         client.subscribe(SpO2Topic, 1);
                         client.subscribe(longitudeTopic, 1);
                         client.subscribe(latitudeTopic, 1);
+                        client.subscribe(FallDownTopic,1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -167,7 +181,7 @@ public class HomeActivity extends AppCompatActivity {
                     System.out.println("messageArrived----------");
                     Message msg = new Message();
                     msg.what = 1;
-                    msg.obj = topicName + "---" + message.toString();
+                    msg.obj = message.toString();
                     //resultTv.setText(msg.obj.toString());
 
                     getTopicName=topicName;
@@ -227,8 +241,8 @@ public class HomeActivity extends AppCompatActivity {
 
     //与碎片进行通信，提供心率,血氧，经纬度等数据
     public String[] getData(){
-        //String[] mqttData = {heartRate, spO2, longitude, latitude};
-        String[] mqttData = {"1","2","3","4"};
+        String[] mqttData = {heartRate, spO2,latitude,longitude};
+        //String[] mqttData1 = {"1","2","3","4"};
         return mqttData;
     }
 

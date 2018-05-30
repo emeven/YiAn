@@ -20,7 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/colorBlack"/>
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/swipeLayout" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -156,71 +168,107 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <!--<ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_statistics"/>-->
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="心率："/>
-                <TextView
-                    android:id="@+id/fragment_home_heartrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="检测中..."/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="血氧："/>
-                <TextView
-                    android:id="@+id/fragment_home_spo2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="检测中..."/>
-            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:textColor="@color/colorTextGray"
-                android:textSize="12sp"
-                android:text="身体数据"/>
+
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
+        <!--<lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:background="#ffffff"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="25dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="心率："/>
+            <TextView
+                android:id="@+id/fragment_home_heartrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="检测中..."/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="14sp"
+                android:gravity="right"
+                android:text="心率变化图"/>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:id="@+id/heart_rate_chart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="血氧："/>
+            <TextView
+                android:id="@+id/fragment_home_spo2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="检测中..."/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="14sp"
+                android:gravity="right"
+                android:text="血氧变化图"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/SpO2_chart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <!--<ImageView
@@ -231,27 +279,31 @@
 
             <com.baidu.mapapi.map.MapView
                 android:id="@+id/fragment_home_bmapview"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
                 android:clickable="true" />
             <LinearLayout
-                android:layout_width="100dp"
+                android:id="@+id/fragment_home_weizhixinxi"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
             <TextView
                 android:id="@+id/fragment_home_weizhi"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:textColor="@color/colorTextGray"
                 android:textSize="12sp"
-                android:text="位置"/>
+                android:text="位置:"/>
             <TextView
                 android:id="@+id/fragment_home_position_txt_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/colorTextGray"
                 android:textSize="12sp"
                 android:text="hellow world"/>
@@ -323,23 +375,11 @@
             android:background="@drawable/ic_enter"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/ceshiyong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="测试用"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_home_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_refresh"
-        app:borderWidth="0dp"
-        android:backgroundTint="#DCDCDC" />
+    </LinearLayout>
+    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 
