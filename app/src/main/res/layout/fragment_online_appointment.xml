@@ -136,7 +136,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:text="         起始时间"/>
+                android:text="起始时间"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -144,14 +144,14 @@
                 android:gravity="center"
                 android:textSize="12sp"
                 android:background="@null"
-                android:hint="2018"/>
+                android:hint="08:00"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="14sp"
-                android:text="         截止时间"/>
+                android:text="截止时间"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -159,7 +159,7 @@
                 android:gravity="center"
                 android:textSize="12sp"
                 android:background="@null"
-                android:hint="05-21"/>
+                android:hint="16:00"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

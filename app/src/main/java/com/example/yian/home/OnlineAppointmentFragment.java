@@ -43,7 +43,7 @@ public class OnlineAppointmentFragment extends Fragment implements View.OnClickL
         thursday.setOnClickListener(this);
         friday.setOnClickListener(this);
         saturday.setOnClickListener(this);
-
+        appointment.setOnClickListener(this);
         return view;
     }
 

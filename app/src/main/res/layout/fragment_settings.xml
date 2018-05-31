@@ -98,7 +98,8 @@
             <ListView
                 android:id="@+id/fragment_setting_list1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp"
+                android:dividerHeight="1px"/>
 
 
             <TextView
@@ -112,7 +113,8 @@
             <ListView
                 android:id="@+id/fragment_setting_list2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:dividerHeight="1px"/>
 
 
         </LinearLayout>
