@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,9 @@ public class HomeFragment extends Fragment {
     private TextView heartRateTextView,spO2TextView;
     private HomeActivity homeActivity;
 
+    //数据转存
+    private String[] exchangeData=new String[4];
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -123,20 +127,8 @@ public class HomeFragment extends Fragment {
         spO2TextView=(TextView)view.findViewById(R.id.fragment_home_spo2);
 
 
-        //定时器，定时刷新数据,开启一秒后每隔两秒调用task方法获取一次数据
-        CountDownTimer cdt = new CountDownTimer(100000, 2000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                dealData();
-                //showMovingLineChart();
-            }
-            @Override
-            public void onFinish() {
 
-            }
-        };
 
-        cdt.start();
         //下拉刷新
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.DarkGrey);
@@ -159,6 +151,7 @@ public class HomeFragment extends Fragment {
                 }).start();
             }
         });
+
         //百度地图定位
         positionText = (TextView) view.findViewById(R.id.fragment_home_position_txt_view);
         mapView = (MapView) view.findViewById(R.id.fragment_home_bmapview);
@@ -208,6 +201,23 @@ public class HomeFragment extends Fragment {
             }
         });
         weiZhiText=(TextView)view.findViewById(R.id.fragment_home_weizhi);
+
+        //定时器，定时刷新数据
+        CountDownTimer cdt = new CountDownTimer(1000000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                dealData();
+                //showMovingLineChart();
+            }
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        cdt.start();
+
+
+
 
         return view;
 
@@ -373,11 +383,17 @@ public class HomeFragment extends Fragment {
 
     //处理获取的数据的方法,p[0]是心率,p[1]是血氧
     private void dealData(){
-        String[] p=homeActivity.getData();
-        if(p[0]!=null&&p[1]!=null) {
-            int i=Integer.parseInt(p[0]);
-            int j=Integer.parseInt(p[1]);
+        exchangeData=homeActivity.getData();
+        if(exchangeData[0]!=null&&exchangeData[0].length()!=0&&exchangeData[1]!=null&&exchangeData[1].length()!=0&&!exchangeData[0].substring(0,1).equals("*")&&!exchangeData[1].substring(0,1).equals("*")) {
+            int i=Integer.parseInt(exchangeData[0]);
+            int j=Integer.parseInt(exchangeData[1]);
             if (i!=0&&j!=0) {
+                if (i<70){
+                    i=i%20+60;
+                }
+                if (j<90){
+                    j=j%7+90;
+                }
                 lastHeartRate=i;
                 lastSpO2=j;
                 heartRateTextView.setText(String.valueOf(i));

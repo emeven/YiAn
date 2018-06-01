@@ -79,17 +79,17 @@ public class HomeActivity extends AppCompatActivity {
                     spO2=(String)msg.obj;
                     //Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
                 }
-                if(getTopicName.equals("Longitude")){
+                /*if(getTopicName.equals("Longitude")){
                     longitude=(String)msg.obj;
-                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
                 }
                 if(getTopicName.equals("Latitude")){
                     latitude=(String)msg.obj;
-                    Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
-                }
+                    //Toast.makeText(HomeActivity.this,(String) msg.obj,Toast.LENGTH_SHORT).show();
+                }*/
                 if(getTopicName.equals("Help Signal")){
                     fallDown=(String) msg.obj;
-                    Toast.makeText(HomeActivity.this,"warning!",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(HomeActivity.this,"warning!",Toast.LENGTH_SHORT).show();
                     //振动事件，等待一秒，振动一秒，重复三次
                     Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
                     vibrator.vibrate(new long[]{1000,1000,1000,1000,1000,1000},-1);
@@ -107,8 +107,8 @@ public class HomeActivity extends AppCompatActivity {
                         //开始订阅
                         client.subscribe(heartRateTopic, 1);
                         client.subscribe(SpO2Topic, 1);
-                        client.subscribe(longitudeTopic, 1);
-                        client.subscribe(latitudeTopic, 1);
+                        //client.subscribe(longitudeTopic, 1);
+                        //client.subscribe(latitudeTopic, 1);
                         client.subscribe(FallDownTopic,1);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -241,8 +241,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //与碎片进行通信，提供心率,血氧，经纬度等数据
     public String[] getData(){
-        String[] mqttData = {heartRate, spO2,latitude,longitude};
-        //String[] mqttData1 = {"1","2","3","4"};
+        String[] mqttData = {heartRate,spO2};
         return mqttData;
     }
 
