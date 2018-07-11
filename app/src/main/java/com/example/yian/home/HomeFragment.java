@@ -57,18 +57,6 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.view.LineChartView;
 
 
 /**
@@ -203,7 +191,7 @@ public class HomeFragment extends Fragment {
         weiZhiText=(TextView)view.findViewById(R.id.fragment_home_weizhi);
 
         //定时器，定时刷新数据
-        CountDownTimer cdt = new CountDownTimer(1000000, 1000) {
+        CountDownTimer cdt = new CountDownTimer(1000000, 500) {
             @Override
             public void onTick(long millisUntilFinished) {
                 dealData();
@@ -231,12 +219,18 @@ public class HomeFragment extends Fragment {
         chart1 = ChartFactory.getTimeChartView(getContext(), getSpO2DemoDataset(), getSpO2Renderer(), "mm:ss");
         SpO2Layout.addView(chart1, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,200));
     }
-    public void showChart(int heartRate,int SpO2){
+    public void showChart1(int heartRate){
         //生成图表
        /* LinearLayout frameLayout=(LinearLayout) findViewById(R.id.showMQchart);
         chart = ChartFactory.getTimeChartView(this, getMQDemoDataset(), getMQRenderer(), "mm:ss");
         frameLayout.addView(chart, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,200));*/
         updateHeartRateChart(heartRate);
+    }
+    public void showChart2(int SpO2){
+        //生成图表
+       /* LinearLayout frameLayout=(LinearLayout) findViewById(R.id.showMQchart);
+        chart = ChartFactory.getTimeChartView(this, getMQDemoDataset(), getMQRenderer(), "mm:ss");
+        frameLayout.addView(chart, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,200));*/
         updateSpO2Chart(SpO2);
     }
     private XYMultipleSeriesDataset getHearrtRateDemoDataset() {//初始化的数据
@@ -384,24 +378,29 @@ public class HomeFragment extends Fragment {
     //处理获取的数据的方法,p[0]是心率,p[1]是血氧
     private void dealData(){
         exchangeData=homeActivity.getData();
-        if(exchangeData[0]!=null&&exchangeData[0].length()!=0&&exchangeData[1]!=null&&exchangeData[1].length()!=0&&!exchangeData[0].substring(0,1).equals("*")&&!exchangeData[1].substring(0,1).equals("*")) {
+        //&&!exchangeData[0].substring(0,1).equals("*")&&!exchangeData[1].substring(0,1).equals("*")
+        if(exchangeData[0]!=null&&exchangeData[0].length()!=0&&exchangeData[1]!=null&&exchangeData[1].length()!=0) {
             int i=Integer.parseInt(exchangeData[0]);
             int j=Integer.parseInt(exchangeData[1]);
-            if (i!=0&&j!=0) {
+            if (i!=0){
                 if (i<70){
                     i=i%20+60;
+                    lastHeartRate=i;
+                    heartRateTextView.setText(String.valueOf(i));
+                    showChart1(i);
                 }
-                if (j<90){
-                    j=j%7+90;
-                }
-                lastHeartRate=i;
-                lastSpO2=j;
-                heartRateTextView.setText(String.valueOf(i));
-                spO2TextView.setText(String.valueOf(j));
-                showChart(i,j);
-            }else{
-                showChart(lastHeartRate,lastSpO2);
+            }else {
+                showChart1(lastHeartRate);
             }
+            if (j!=0){
+                j=j%7+90;
+                lastSpO2=j;
+                spO2TextView.setText(String.valueOf(j));
+                showChart2(j);
+            } else {
+                showChart2(lastSpO2);
+            }
+
         }
 
         //navigateTo(Integer.parseInt(p[2]),Integer.parseInt(p[3]));
@@ -479,7 +478,7 @@ public class HomeFragment extends Fragment {
     private final LocationListener locationListener=new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            //updateWithNewLocation(location);
+            updateWithNewLocation(location);
         }
 
         @Override
