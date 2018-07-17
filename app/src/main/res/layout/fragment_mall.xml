@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:src="@drawable/img_mall_01"/>
+            
 
             <ImageView
                 android:layout_width="match_parent"
